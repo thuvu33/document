@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+        <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+		<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>
+        <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+    </head>
+    <body>
+	<div data-role="page" id="search_advance">
+            <div data-role="header">
+				<div data-role="navbar">
+				  <ul>
+					<li><a href="#pageone" data-icon="search">Search</a></li>
+					<li><a href="#" data-icon="search" class="ui-btn-active ui-state-persist">Search Advance</a></li>
+				  </ul>
+				</div>
+            </div>
+            <div data-role="main" class="ui-content">
+			<div id="map_canvas" style="  height: 100vh;width: 100%;min-height: 100%;max-height: none;"></div>
+            </div>
+        </div>
+		
+		<script>
+function load_google_maps() {
+navigator.geolocation.getCurrentPosition(function(position)
+{
+
+    var map = new google.maps.Map(document.getElementById('map_canvas'), {
+        zoom: 15,
+        center: new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+    });
+
+    var pos, marker, content, infowindow;
+					  marker = new google.maps.Marker({
+						position: new google.maps.LatLng(position.coords.latitude, position.coords.longitude),
+						map: map
+					  });
+    infowindow = new google.maps.InfoWindow();
+                $.ajax({
+                url: 'http://pacce7.site11.com/hospital/search_location.php',
+                data: {
+                  action: 'search_position',
+                  latitude: position.coords.latitude,
+                  longitude: position.coords.longitude
+                },
+                type: 'post',
+                async: 'true',
+                dataType: 'json',
+                beforeSend: function() {
+                  // This callback function will trigger before data is sent
+                },
+                complete: function() {
+                },
+                success: function(result) {
+                  if (result.status) {
+                    var record = JSON.parse(result.result);
+					  for (i = 0; i < record.length; i++) {  
+					  marker = new google.maps.Marker({
+						position: new google.maps.LatLng(record[i].Latitude, record[i].Longitude),
+						map: map
+					  });
+
+					}
+                  } else {
+                    alert("Can't access data!");
+                  }
+                },
+                error: function(request, error) {
+                  // This callback function will trigger on unsuccessful action               
+                  alert('Network error has occurred please try again!');
+                }
+              });
+},
+function(error)
+{
+    // error getting GPS coordinates
+    alert('code: ' + error.code + ' with message: ' + error.message + '\n');
+}, 
+{ enableHighAccuracy: true, maximumAge: 3000, timeout: 5000 });
+}
+		</script>
+    </body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+  
+<script>
+$(document).ready(function(){
+    $("#searchbutton").click(function(){
+    });
+});
+</script>
+	
+	
+</head>
+<body>
+
+<div class="container">
+  <h2>Tìm Kiếm</h2>
+  <form class="form-horizontal" role="form" id="searchForm">
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="name">Tên:</label>
+      <div class="col-sm-10">
+        <input type="name" class="form-control" id="name" placeholder="Tên Bác Sĩ">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="hospital">Bệnh Viện:</label>
+      <div class="col-sm-10">          
+        <input type="password" class="form-control" id="hospital" placeholder="Bệnh Viện">
+      </div>
+    </div>
+	
+	<div class="form-group">
+      <label class="control-label col-sm-2" for="faculty">Chuyên Khoa:</label>
+      <div class="col-sm-10">          
+	  <select class="form-control" id="faculty">
+          <option value="mon">Nhi</option>
+          <option value="tue">Ngoại Khoa</option>
+          <option value="wed">Nội Khoa</option>
+          <option value="thu">Xương</option>
+          <option value="fri">Răng-Hàm-Mặt</option>
+          <option value="sat">Da Liễu</option>
+          <option value="sun">Phụ Sản</option>
+      </select>
+      </div>
+    </div>
+	
+	<div class="form-group">
+      <label class="control-label col-sm-2" for="vip">Bác Sĩ VIP:</label>
+      <div class="col-sm-10">          
+	  <select class="form-control" id="vip">
+	      <option value="normal">Bác Sĩ Thường</option>
+          <option value="vip">Bác Sĩ VIP</option>
+      </select>
+      </div>
+    </div>
+
+    <div class="form-group">        
+      <div class="col-sm-offset-2 col-sm-10">
+        <button type="submit" id="searchbutton">Tìm Kiếm</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+</body>
+</html>

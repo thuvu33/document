@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+        <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+        <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+    </head>
+    <body>
+        <div data-role="page" id="pagestart">
+            <div data-role="main" class="ui-content">
+                <a href="#pagelogin" class="ui-shadow ui-btn ui-corner-all ui-icon-arrow-r ui-btn-icon-right">Login</a>
+                <a href="#pageregister" class="ui-shadow ui-btn ui-corner-all ui-icon-arrow-r ui-btn-icon-right">Register</a>
+            </div>
+        </div>
+        <div data-role="page" id="pagelogin">
+            <div data-role="header">
+                <a href="#pagestart" class="ui-btn ui-corner-all ui-icon-carat-l ui-btn-icon-notext"></a>
+                <h1>Login</h1>
+            </div>
+            <div data-role="main" class="ui-content" id="login_div">
+                <form>
+                    <label>Username:</label>
+                    <input type="text" name="username" id="username">
+                    <label>Password:</label>
+                    <input type="text" name="password" id="password">
+                    <a id="login" class="ui-shadow ui-btn ui-corner-all">Login</a>
+                </form>
+            </div>
+        </div>
+        <div data-role="page" id="pageregister">
+            <div data-role="header">
+                <a href="#pagestart" class="ui-btn ui-corner-all ui-icon-carat-l ui-btn-icon-notext"></a>
+                <h1>Register</h1>
+            </div>
+            <div data-role="main" class="ui-content">
+                <form>
+                    <label>Fullname:</label>
+                    <input type="text" id="fullname_reg">
+                    <label>Username:</label>
+                    <input type="text" id="username_reg">
+                    <label>Email:</label>
+                    <input type="text" id="email_reg">
+                    <label>PhoneNo:</label>
+                    <input type="text" id="phoneno_reg">
+                    <label>Password:</label>
+                    <input type="text" id="password_reg">
+                    <a id="register" class="ui-shadow ui-btn ui-corner-all">Register</a>
+                </form>
+            </div>
+        </div>
+        <div data-role="page" id="pageone">
+            <div data-role="header">
+				<div data-role="navbar">
+				  <ul>
+					<li><a href="#" class="ui-btn-active ui-state-persist" data-icon="search">Search</a></li>
+					<li><a href="#search_advance" data-icon="search">Search Advance</a></li>
+				  </ul>
+				</div>
+            </div>
+            <div data-role="main" class="ui-content">
+                <form>
+                    <label for="name">Name:</label>
+                    <input type="text" name="name" id="name_doctor" value="">
+                    <label>Hospital:</label>
+                    <a id="select_hospital" class="ui-shadow ui-btn ui-corner-all ui-icon-arrow-r ui-btn-icon-right">Select hospital</a>
+                    <label>Faculity:</label>
+                    <a id="select_faculty" data-theme="a" class="ui-shadow ui-btn ui-corner-all ui-icon-arrow-r ui-btn-icon-right">Select faculty</a>
+                    <a id="search_doctor" data-theme="a" class="ui-btn ui-icon-search ui-btn-icon-right ui-corner-all">Search</a>
+                </form>
+            </div>
+        </div>
+        <div data-role="page" id="pagetwo">
+            <div data-role="header">
+                <h1>Select Hospital</h1>
+            </div>
+            <div data-role="main" class="ui-content">
+                <div id="hospital_div">
+                </div>
+            </div>
+            <input type="button" id="save_hospital" name="save_hospital" value="Save" />
+        </div>
+        <div data-role="page" id="pagethree">
+            <div data-role="header">
+                <h1>Select Faculty</h1>
+            </div>
+            <div data-role="main" class="ui-content">
+                <div id="faculty_div">
+                </div>
+            </div>
+            <input type="button" id="save_faculty" name="save_faculty" value="Save" />
+        </div>
+        <div data-role="page" id="pagefour">
+            <div data-role="header">
+				<a id="search_again" class="ui-btn ui-corner-all ui-icon-carat-l ui-btn-icon-notext"></a>
+                
+                <h1>List Doctor</h1>
+            </div>
+            <div data-role="main" class="ui-content" data-iscroll>
+                <ul data-role="listview" data-filter="true" id="listview_doctor" data-theme="a">
+                </ul>
+            </div>
+        </div>
+		
+		<div data-role="page" id="search_advance">
+            <div data-role="header">
+				<div data-role="navbar">
+				  <ul>
+					<li><a href="#pageone" data-icon="search">Search</a></li>
+					<li><a href="#" data-icon="search" class="ui-btn-active ui-state-persist">Search Advance</a></li>
+				  </ul>
+				</div>
+            </div>
+            <div data-role="main" class="ui-content">
+			<h2>Search Detail</h2>
+            </div>
+        </div>
+		
+		
+        <script>
+            function getJson() {
+              $.getJSON("http://localhost/demo/get_hospital.php", function(data) {
+                var record = data.hospitals;
+                for (var i = 0; i < record.length; i++) {
+                  var object = record[i];
+                  $("#hospital_div").append('<label><input type="checkbox" name="' + object.Name +
+                    '" class="class_checkd" value="' + object.Value + '">' + object.Name + '</label>');
+                }
+              });
+            
+              $.getJSON("http://localhost/demo/get_faculty.php", function(data) {
+                var record = data.facultys;
+                for (var i = 0; i < record.length; i++) {
+                  var object = record[i];
+                  $("#faculty_div").append('<label><input type="checkbox" name="' + object.Name +
+                    '" class="class_checkf" value="' + object.Value + '">' + object.Name + '</label>');
+                }
+              });
+            
+              return 1;
+            }
+            var resultGetJson = getJson();
+            $('#select_hospital').click(function() {
+              window.location = "#pagetwo"
+            });
+            
+            $('#select_faculty').click(function() {
+              window.location = "#pagethree"
+            });
+        </script>
+        <script>
+            $('#save_hospital').click(function() {
+              var final = '';
+              $('.class_checkd:checked').each(function() {
+                var values = $(this).val();
+                if (final != "") {
+                  final += ","
+                }
+                final += values;
+              });
+              window.location = "#pageone"
+            });
+            
+            $('#save_faculty').click(function() {
+              var final = '';
+              $('.class_checkf:checked').each(function() {
+                var values = $(this).val();
+                if (final != "") {
+                  final += ","
+                }
+                final += values;
+              });
+              window.location = "#pageone"
+            });
+            
+            $('#search_again').click(function() {
+              $("#listview_doctor").empty();
+              window.location = "#pageone"
+              location.reload();
+            });
+            
+            $('#search_doctor').click(function() {
+              var check_hospital = '';
+              $('.class_checkd:checked').each(function() {
+                var values = $(this).val();
+                if (check_hospital != "") {
+                  check_hospital += ","
+                }
+                check_hospital += values;
+              });
+              var check_faculty = '';
+              $('.class_checkf:checked').each(function() {
+                var values = $(this).val();
+                if (check_faculty != "") {
+                  check_faculty += ","
+                }
+                check_faculty += values;
+              });
+            
+              var name_doctor = $("#name_doctor").val();
+              $.ajax({
+                url: 'http://localhost/demo/search_doctor.php',
+                data: {
+                  action: 'search_doctor',
+                  name: name_doctor,
+                  hospital: check_hospital,
+                  faculty: check_faculty
+                },
+                type: 'post',
+                async: 'true',
+                dataType: 'json',
+                beforeSend: function() {
+                  // This callback function will trigger before data is sent
+                },
+                complete: function() {
+                  window.location = "#pagefour";
+                  $('#listview_doctor').listview('refresh');
+                },
+                success: function(result) {
+                  if (result.status) {
+                    var record = JSON.parse(result.result);
+					//alert(result.result);
+                    for (var i = 0; i < record.length; i++) {
+                      var object = record[i];
+                      $('#listview_doctor').append(
+                        '<li><a href="show_detail.html?name=' + object.Name + '&hospital=' + object.Hospital + '&faculty=' + object.Faculty + '"><img src="https://mir-s3-cdn-cf.behance.net/project_modules/disp/7a02e010328017.560e316093fb7.png" /> <h1> ' +
+                        object.Name + '</h1><p> ' + object.Hospital + '</p></a></li>');
+                    }
+                  } else {
+                    alert('Login unsuccessful!');
+                  }
+                },
+                error: function(request, error) {
+                  // This callback function will trigger on unsuccessful action               
+                  alert('Network error has occurred please try again!');
+                }
+              });
+            
+            });
+        </script>
+        <script>
+            $('#login').click(function() {
+                  var check = 0;
+                       $.ajax({
+                    url: 'http://localhost/demo/login.php',
+                    data: {
+                      action: 'login',
+                      username: $("#username").val(),
+                      password: $("#password").val()
+                    },
+                    type: 'post',
+                    async: 'true',
+                    dataType: 'json',
+                    beforeSend: function() {
+                      // This callback function will trigger before data is sent
+                    },
+                    complete: function() {
+					if(check == 1) {
+					    window.location = "#pageone";
+					}
+                    else {
+					    if (check == 2) {
+						    $('#login_div').append('<h2>Try again!</h2>');
+						}
+						else {
+						    if (check == 3) {
+							    $('#login_div').append('<h2>Network error has occurred please try again!</h2>');
+							}
+						}
+					}  
+                    },
+                    success: function(result) {
+                      if (result.status) {
+                      check = 1;
+                      } else {
+                          check = 2;
+                      }
+                    },
+                    error: function(request, error) {
+                      // This callback function will trigger on unsuccessful action               
+                      check = 3;
+                    }
+                  });
+                });
+        </script>
+        <script>
+            $('#register').click(function() {
+            var result_register = 0;
+                  $.ajax({
+                    url: 'http://localhost/demo/register.php',
+                    data: {
+                      action: 'register',
+             fullname: $("#fullname_reg").val(),
+                      username: $("#username_reg").val(),
+             email: $("#email_reg").val(),
+             phoneno: $("#phoneno_reg").val(),
+                      password: $("#password_reg").val()
+                    },
+                    type: 'post',
+                    async: 'true',
+                    dataType: 'json',
+                    beforeSend: function() {
+                      // This callback function will trigger before data is sent
+                    },
+                    complete: function() {
+                      window.location = "#";
+                    },
+                    success: function(result) {
+                      if (result.status) {
+                           result_register = 1;
+                      } else {
+                           result_register = 2;
+
+                      }
+                    },
+                    error: function(request, error) {
+                         result_register = 3;
+                      // This callback function will trigger on unsuccessful action               
+                      //alert('Network error has occurred please try again!');
+                    }
+                  });
+            });
+        </script>
+		<script>
+		
+		$(document).on('pagebeforeshow', "#show_detail",function () {
+		alert("tvfvfvsfvdfv");
+            //var parameters = $(this).data("url").split("?")[1].split("&");
+			$('#parent_detail').append('<p>sdfsdfsdfsdf</p>');
+            //$('#show_detail').append('<div id="left_detail"><img src="http://pharmaguide.co/wp-content/uploads/2014/07/smiling_medical_doctor_with_stethoscope_on_the_hospitals_background_1350367266.jpg" style="width:100%;height:100%;"></div>');
+			/*
+			$('#parent_detail').append('<div id="right_detail">');
+			for(i = 0; i < parameters.length; i++){
+			    var value_content = parameters[i].split("=");
+				if (value_content[0] == "name") {
+				    $('#parent_detail').append('<p>' + value_content[1] + '</p><hr>');
+				}
+				else if (value_content[0] == "hospital") {
+				    $('#parent_detail').append('<p>' + value_content[1] + '</p><hr>');
+				}
+				else if (value_content[0] == "faculty") {
+				    $('#parent_detail').append('<p>' + value_content[1] + '</p>');
+				}
+			}
+			$('#parent_detail').append('</div>');
+			*/
+        });
+		</script>
+    </body>
+</html>
